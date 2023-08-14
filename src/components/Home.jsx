@@ -18,7 +18,7 @@ export default function Home() {
     //Creates a new conversation with the address
     if (await xmtp_client?.canMessage(PEER_ADDRESS)) {
       const conversation = await xmtp_client.conversations.newConversation(
-        addressTo,
+        addressTo
       );
       convRef.current = conversation;
       //Loads the messages of the conversation
@@ -33,7 +33,10 @@ export default function Home() {
   // Function to initialize the XMTP client
   const initXmtp = async function () {
     // Create the XMTP client
-    const xmtp = await Client.create(signer, { env: "production" });
+    const xmtp = await Client.create(signer, {
+      env: "dev",
+      persistConversations: false,
+    });
     //Create or load conversation with Gm bot
     newConversation(xmtp, PEER_ADDRESS);
     // Set the XMTP client in state for later use
